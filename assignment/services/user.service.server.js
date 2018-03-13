@@ -59,7 +59,7 @@ module.exports = function (app) {
         return user.username === username && user.password === password;
       });
     }
-    res.json(user);
+    res.send(user);
   }
 
   function updateUser(req, res) {
