@@ -14,14 +14,7 @@ module.exports = function (app) {
   var widgets = [
     {_id: '123', widgetType: 'Heading', pageId: '321', size: '2', text: 'GIZMODO', width: '', url: ''},
     {_id: '234', widgetType: 'Heading', pageId: '321', size: '4', text: 'Lorem ipsum', width: '', url: ''},
-    {
-      _id: '345',
-      widgetType: 'Image',
-      pageId: '321',
-      size: '',
-      text: '',
-      width: '100%',
-      url: 'http://www.letsintern.com/blog/wp-content/uploads/2014/05/marvel.jpeg'
+    {_id: '345', widgetType: 'Image', pageId: '321', size: '', text: '', width: '100%', url: 'http://www.letsintern.com/blog/wp-content/uploads/2014/05/marvel.jpeg'
     },
     {_id: '567', widgetType: 'Heading', pageId: '321', size: '4', text: 'Lorem ipsum', width: '', url: ''},
     {
@@ -37,7 +30,6 @@ module.exports = function (app) {
 
   function uploadImage(req, res) {
     var widgetId = req.body.widgetId;
-    console.log(widgetId);
     var width = req.body.width;
     var myFile = req.file;
 
@@ -54,10 +46,10 @@ module.exports = function (app) {
 
     for (var x = 0; x < widgets.length; x++) {
       if (widgets[x]._id === widgetId) {
-        widgets[x].url = 'uploads/' + filename;
+        widgets[x].url = '/uploads/' + filename;
       }
     }
-    res.redirect("http://localhost:3100/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
+    res.redirect("https://cs5610-webdev-yujunm.herokuapp.com/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
 
   }
 
