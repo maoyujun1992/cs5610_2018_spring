@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid ct-no-padding">
+  <div class="card">
+    <div class="card-header">
+      <a routerLink="../.."><i class="fa fa-chevron-left black-icon" aria-hidden="true"></i></a>
+      <strong class="heading-padding text-muted">Widgets</strong>
+      <a class="float-right" routerLink="./new"><i class="fa fa-plus black-icon" aria-hidden="true"></i></a>
+    </div>
+    <div class="card p-2">
+      <div appWbdvSortable (newIndexes)="reorderWidgets($event)">
+      <div *ngFor="let widget of widgets">
+        <div [ngSwitch]="widget.widgetType">
+          <div *ngSwitchCase="'Heading'">
+            <span class="fa fa-align-justify pull-right" aria-hidden="true"></span>
+            <a routerLink="./{{widget._id}}">
+              <span class="fa fa-cog pull-right"></span>
+            </a>
+            <div [ngSwitch]="widget.size">
+              <h1 *ngSwitchCase="1">{{widget.text}}</h1>
+              <h2 *ngSwitchCase="2">{{widget.text}}</h2>
+              <h3 *ngSwitchCase="3">{{widget.text}}</h3>
+              <h4 *ngSwitchCase="4">{{widget.text}}</h4>
+              <h5 *ngSwitchCase="5">{{widget.text}}</h5>
+              <h6 *ngSwitchCase="6">{{widget.text}}</h6>
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'Youtube'">
+            <div>
+              <span class="fa fa-align-justify pull-right"></span>
+              <a routerLink="./{{widget._id}}">
+                <span class="fa fa-cog pull-right"></span>
+              </a>
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe  class="embed-responsive-item" [src]= getUrl(widget.url)></iframe>
+              </div>
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'Image'">
+            <span class="fa fa-align-justify pull-right"></span>
+            <a routerLink="./{{widget._id}}">
+              <span class="fa fa-cog pull-right"></span>
+            </a>
+            <img class="img-width" src="{{widget.url}}">
+          </div>
+        </div>
+      </div>
+  </div>
+      <div class="card-footer fixed-bottom">
+        <a class="float-right" routerLink="../../../../.."><i class="fa fa-user" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid ct-no-padding">
+  <div class="card fixed-top">
+    <div class="card-header">
+      <a routerLink="../"><i class="fa fa-chevron-left black-icon" aria-hidden="true"></i></a>
+      <strong class="heading-padding text-muted">Widget Edit</strong>
+      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()" [disabled]="!f.valid"><i
+        class="fa fa-check black-icon" aria-hidden="true"></i></button>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="updateOrCreate()" #f="ngForm">
+        <div class="form-group">
+          <label class="lab-no-m">Name</label>
+          <input type="text" class="form-control" placeholder="">
+          <label class="lab-no-m">Text</label>
+          <input
+            name="text"
+            type="text"
+            class="form-control"
+            placeholder="{{widget.text}}"
+            ngModel
+            required
+            #text="ngModel"/>
+          <p class="help-block"
+             *ngIf="!text.valid && text.touched">
+            Please enter text!
+          </p>
+          <label class="lab-no-m">Size</label>
+          <input
+            [(ngModel)]="size"
+            type="text"
+            name="size"
+            class="form-control"
+            placeholder="{{widget.size}}">
+        </div>
+      </form>
+      <a routerLink="../" class="btn btn-danger btn-block" (click)="delete()">Delete</a>
+
+      <div class="card-footer fixed-bottom">
+        <a class="float-right" routerLink="../../../../../.."><i class="fa fa-user"
+                                                                 aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

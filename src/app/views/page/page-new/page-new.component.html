@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid ct-no-padding">
+  <div class="card fixed-top no-border">
+    <div class="card-header">
+      <a routerLink="/user/{{userId}}/website/{{websiteId}}/page"><i class="fa fa-chevron-left black-icon"
+                                                                     aria-hidden="true"></i></a>
+      <strong class="heading-padding text-muted">New Page</strong>
+      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()"
+              routerLink="/user/{{userId}}/website/{{websiteId}}/page" [disabled]="!f.valid"><i
+        class="fa fa-check black-icon" aria-hidden="true"></i></button>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="create()" #f="ngForm">
+        <div class="form-group">
+          <label class="lab-no-m">Name</label>
+          <input
+            name="name"
+            type="text"
+            class="form-control"
+            placeholder="name"
+            ngModel=""
+            required
+            #name="ngModel">
+          <p class="help-block"
+             *ngIf="!name.valid && name.touched">
+            Please enter page name!
+          </p>
+          <label class="lab-no-m">Title</label>
+          <input
+            [(ngModel)]="title"
+            name="title"
+            type="text"
+            class="form-control"
+            placeholder="title">
+
+        </div>
+      </form>
+    </div>
+    <div class="card-footer fixed-bottom">
+      <a class="float-right" routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>

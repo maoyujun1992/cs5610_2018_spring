@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid ct-no-padding">
+  <div class="card fixed-top">
+    <div class="card-header">
+      <a routerLink="../"><i class="fa fa-chevron-left black-icon" aria-hidden="true"></i></a>
+      <strong class="heading-padding text-muted">Widget Edit</strong>
+      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()"><i
+        class="fa fa-check black-icon" aria-hidden="true"></i></button>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="updateOrCreate()" #f="ngForm">
+        <div class="form-group">
+          <label class="lab-no-m">Name</label>
+          <input type="text" class="form-control" placeholder="">
+          <label class="lab-no-m">Text</label>
+          <input
+            [(ngModel)]="text"
+            name="text"
+            type="text"
+            class="form-control"
+            placeholder="{{text}}">
+          <label class="lab-no-m">URL</label>
+          <input type="text"
+                 name="url"
+                 class="form-control"
+                 placeholder="{{widget.url}}"
+                 ngModel=""
+                 required
+                 #url="ngModel"/>
+          <label class="lab-no-m">Width</label>
+          <input type="text"
+                 [(ngModel)]="width"
+                 name="width"
+                 class="form-control"
+                 placeholder="{{width}}">
+          <label class="lab-no-m">Upload</label>
+          <form ngNoForm action="{{baseUrl}}/api/upload" method="post" enctype="multipart/form-data">
+            <input  name="myFile"   type="file" class="form-control"/>
+            <input  name="widgetId" value="{{widgetId}}"   style="display: none"/>
+            <input  name="websiteId" value="{{websiteId}}"   style="display: none"/>
+            <input  name="pageId" value="{{pageId}}"   style="display: none"/>
+            <input  name="userId" value="{{userId}}"   style="display: none"/>
+            <button type="submit" class="btn btn-block btn-primary">
+              Upload Image</button>
+          </form>
+        </div>
+        <button routerLink="../" (click)="delete()" class="btn btn-danger btn-block">Delete</button>
+      </form>
+    </div>
+    <div class="card-footer fixed-bottom">
+      <a class="float-right" routerLink="../../../../../.."><i class="fa fa-user" aria-hidden="true"></i></a>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>

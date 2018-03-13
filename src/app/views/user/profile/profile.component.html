@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid ct-no-padding">
+  <div class="card fixed-top">
+
+    <div class="card-header bg-primary text-white">
+      <strong class="heading-padding">Profile</strong>
+      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()"><i class="fa fa-check white-icon"></i></button>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <form (ngSubmit)="update()" #f="ngForm">
+
+          <label class="lab-no-m"><strong>Username</strong></label>
+          <input [(ngModel)]="username"
+                 type="text"
+                 class="form-control"
+                 name="username"
+                 placeholder={{username}}>
+          <label class="lab-no-m"><strong>Email</strong></label>
+          <input [(ngModel)]="email"
+                 type="text"
+                 class="form-control"
+                 name="email"
+                 placeholder={{email}}>
+          <label class="lab-no-m"><strong>First Name</strong></label>
+          <input [(ngModel)]="firstName"
+                 type="text"
+                 class="form-control"
+                 name="firstName"
+                 placeholder={{firstName}}>
+          <label class="lab-no-m"><strong>Last Name</strong></label>
+          <input [(ngModel)]="lastName"
+                 type="text"
+                 class="form-control"
+                 name="lastName"
+                 placeholder={{lastName}}>
+        </form>
+
+      </div>
+      <a routerLink="/user/{{userId}}/website" class="btn btn-primary btn-block text-white">Website</a>
+      <a routerLink="/login" class="btn btn-danger btn-block text-white">Logout</a>
+    </div>
+
+    <div class="card-footer bg-primary text-white fixed-bottom">
+      <a class="btn btn-link float-right white-icon" routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>

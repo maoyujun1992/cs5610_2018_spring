@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid ct-no-padding">
+  <div class="card fixed-top">
+    <div class="card-header">
+      <a routerLink="../"><i class="fa fa-chevron-left black-icon" aria-hidden="true"></i></a>
+      <strong class="heading-padding text-muted">Widget Edit</strong>
+      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()" [disabled]="!f.valid"><i
+        class="fa fa-check black-icon" aria-hidden="true"></i></button>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="updateOrCreate()" #f="ngForm">
+        <div class="form-group">
+          <label class="lab-no-m">Name</label>
+          <input type="text" class="form-control" placeholder="">
+          <label class="lab-no-m">Text</label>
+          <input
+            [(ngModel)]="text"
+            name="text"
+            type="text"
+            class="form-control"
+            placeholder="{{widget.text}}">
+          <label class="lab-no-m">URL</label>
+          <input type="text"
+                 name="url"
+                 class="form-control"
+                 placeholder="{{widget.url}}"
+                 ngModel=""
+                 required
+                 #url="ngModel"/>
+          <p class="help-block"
+             *ngIf="!url.valid && url.touched">
+            Please enter url!
+          </p>
+          <label class="lab-no-m">Width</label>
+          <input type="text"
+                 [(ngModel)]="width"
+                 name="width"
+                 class="form-control"
+                 placeholder="{{widget.width}}">
+        </div>
+        <button routerLink="../" (click)="delete()" class="btn btn-danger btn-block">Delete</button>
+      </form>
+    </div>
+    <div class="card-footer fixed-bottom">
+      <a class="float-right" routerLink="../../../../../.."><i class="fa fa-user" aria-hidden="true"></i></a>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>

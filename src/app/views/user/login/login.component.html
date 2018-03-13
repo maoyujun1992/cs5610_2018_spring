@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid no-frame-padding">
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
+  </div>
+
+  <strong><h3>Login</h3></strong>
+  <form (ngSubmit)="login()" #f="ngForm">
+    <input placeholder="Username"
+           name="username"
+           type="text"
+           class="form-control"
+           ngModel
+           required
+           #username="ngModel"/>
+    <span class="help-block"
+          *ngIf="!username.valid && username.touched">
+      Please enter username!
+      </span>
+    <input placeholder="Password"
+           name="password"
+           type="password"
+           class="form-control"
+           ngModel
+           required
+           #password="ngModel"/>
+    <span class="help-block"
+          *ngIf="!password.valid && password.touched">
+      Please enter password
+      </span>
+    <button class="btn btn-primary btn-block text-white"
+            type="submit"
+            [disabled]="!f.valid">Login
+    </button>
+    <button routerLink="/register" class="btn btn-success btn-block text-white">Register</button>
+  </form>
+
+</div>
+</body>
+</html>
