@@ -17,7 +17,7 @@ export class WidgetImageComponent implements OnInit {
   widgetId: String;
   widget: Widget;
   text: String;
-  url: String;
+  imgurl: String;
   width: String;
   userId: String;
   websiteId: String;
@@ -38,13 +38,13 @@ export class WidgetImageComponent implements OnInit {
             return this.widgetService.findWidgetById(params['wgid']).subscribe((returnWidget: Widget) => {
               this.widget = returnWidget;
               this.text = this.widget.text;
-              this.url = this.widget.url;
+              this.imgurl = this.widget.url;
               this.width = this.widget.width;
             });
           } else {
             this.widget = new Widget('', '', '', '', '', '', '');
             this.text = this.widget.text;
-            this.url = this.widget.url;
+            this.imgurl = this.widget.url.toString();
             this.width = this.widget.width;
           }
         }

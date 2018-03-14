@@ -1,6 +1,6 @@
 module.exports = function (app) {
-  var multer = require('multer'); // npm install multer --save
-  var upload = multer({dest: __dirname + '/../../src/assets/uploads'});
+  var multer = require('multer');
+  var upload = multer({dest: __dirname+'/../../public/uploads' });
 
   app.post("/api/page/:pageId/widget", createWidget);
   app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
@@ -17,14 +17,7 @@ module.exports = function (app) {
     {_id: '345', widgetType: 'Image', pageId: '321', size: '', text: '', width: '100%', url: 'http://www.letsintern.com/blog/wp-content/uploads/2014/05/marvel.jpeg'
     },
     {_id: '567', widgetType: 'Heading', pageId: '321', size: '4', text: 'Lorem ipsum', width: '', url: ''},
-    {
-      _id: '678',
-      widgetType: 'Youtube',
-      pageId: '321',
-      size: '',
-      text: '',
-      width: '100%',
-      url: 'https://www.youtube.com/embed/K0tXliGLb9U'
+    {_id: '678', widgetType: 'Youtube', pageId: '321', size: '', text: '', width: '100%', url: 'https://www.youtube.com/embed/K0tXliGLb9U'
     },
   ];
 
@@ -46,7 +39,7 @@ module.exports = function (app) {
 
     for (var x = 0; x < widgets.length; x++) {
       if (widgets[x]._id === widgetId) {
-        widgets[x].url = '/uploads/' + filename;
+        widgets[x].url = '/public/uploads/' + filename;
       }
     }
     res.redirect("https://cs5610-webdev-yujunm.herokuapp.com/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
