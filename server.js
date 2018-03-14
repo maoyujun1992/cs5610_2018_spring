@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 const http = require('http');
-app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/static', express.static(__dirname + '/public'));
 
 //CORS
 app.use(function(reg, res, next){
