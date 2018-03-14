@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/static', express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'src/assets')));
 
 //CORS
 app.use(function(reg, res, next){
