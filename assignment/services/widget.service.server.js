@@ -75,7 +75,7 @@ module.exports = function (app) {
         }
       }
     }
-    res.redirect("http://localhost:3100/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
+    res.redirect("https://cs5610-webdev-yujunm.herokuapp.com/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
 
   }
 
