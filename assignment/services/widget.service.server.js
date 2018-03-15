@@ -13,25 +13,11 @@ module.exports = function (app) {
 
   var widgets = [
     {_id: '123', widgetType: 'Heading', pageId: '321', size: '2', text: 'GIZMODO', width: '', url: ''},
-    {_id: '234', widgetType: 'Heading', pageId: '321', size: '4', text: 'Lorem ipsum', width: '', url: ''},
-    {
-      _id: '345',
-      widgetType: 'Image',
-      pageId: '321',
-      size: '',
-      text: '',
-      width: '100%',
-      url: 'http://www.letsintern.com/blog/wp-content/uploads/2014/05/marvel.jpeg'
+    {_id: '234', widgetType: 'Text', pageId: '321', size: '', text: 'Lorem ipsum', width: '', url: '', rows: 3, formatted: true, placeholder: 'hello'},
+    {_id: '345', widgetType: 'Image', pageId: '321', size: '', text: '', width: '100%', url: 'http://www.letsintern.com/blog/wp-content/uploads/2014/05/marvel.jpeg'
     },
-    {_id: '567', widgetType: 'Heading', pageId: '321', size: '4', text: 'Lorem ipsum', width: '', url: ''},
-    {
-      _id: '678',
-      widgetType: 'Youtube',
-      pageId: '321',
-      size: '',
-      text: '',
-      width: '100%',
-      url: 'https://www.youtube.com/embed/K0tXliGLb9U'
+    {_id: '567', widgetType: 'Html', pageId: '321', size: '4', text: '<p>Lorem ipsum</p>', width: '', url: ''},
+    {_id: '678', widgetType: 'Youtube', pageId: '321', size: '', text: '', width: '100%', url: 'https://www.youtube.com/embed/K0tXliGLb9U'
     },
   ];
 
@@ -75,7 +61,7 @@ module.exports = function (app) {
         }
       }
     }
-    res.redirect("https://cs5610-webdev-yujunm.herokuapp.com/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
+    res.redirect("http://localhost:3100/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
 
   }
 
@@ -137,6 +123,9 @@ module.exports = function (app) {
         widgets[i].width = widget.width;
         widgets[i].text = widget.text;
         widgets[i].url = widget.url;
+        widgets[i].formatted = widget.formatted;
+        widgets[i].placeholder = widget.placeholder;
+        widgets[i].rows = widget.rows;
         res.status(200).send(widgets[i]);
         return;
       }

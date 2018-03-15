@@ -14,21 +14,12 @@
         <div class="form-group">
           <label class="lab-no-m">Name</label>
           <input type="text" class="form-control" placeholder="">
-          <label class="lab-no-m">Text</label>
-          <input
+          <label class="lab-no-m">HTML</label>
+          <quill-editor
             [(ngModel)]="text"
             name="text"
-            type="text"
-            class="form-control"
-            placeholder="{{widget.text}}"
-            />
-          <label class="lab-no-m">Size</label>
-          <input
-            [(ngModel)]="size"
-            type="text"
-            name="size"
-            class="form-control"
-            placeholder="{{widget.size}}">
+            class="form-control">
+          </quill-editor>
         </div>
       </form>
       <a routerLink="../" class="btn btn-danger btn-block" (click)="delete()">Delete</a>

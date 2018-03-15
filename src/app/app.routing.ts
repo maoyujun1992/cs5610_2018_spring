@@ -15,6 +15,8 @@ import {WidgetEditComponent} from './views/widget/widget-edit/widget-edit.compon
 import {WidgetYoutubeComponent} from './views/widget/widget-edit/widget-youtube/widget-youtube.component';
 import {WidgetHeadingComponent} from './views/widget/widget-edit/widget-heading/widget-heading.component';
 import {WidgetImageComponent} from './views/widget/widget-edit/widget-image/widget-image.component';
+import {WidgetTextComponent} from './views/widget/widget-edit/widget-text/widget-text.component';
+import {WidgetHtmlComponent} from './views/widget/widget-edit/widget-html/widget-html.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -33,6 +35,9 @@ const appRoutes: Routes = [
   {path: 'user/:uid/website/:wid/page/:pid/widget/new/youtube', component: WidgetYoutubeComponent},
   {path: 'user/:uid/website/:wid/page/:pid/widget/new/heading', component: WidgetHeadingComponent},
   {path: 'user/:uid/website/:wid/page/:pid/widget/new/image', component: WidgetImageComponent},
+  {path: 'user/:uid/website/:wid/page/:pid/widget/new/text', component: WidgetTextComponent},
+  {path: 'user/:uid/website/:wid/page/:pid/widget/new/html', component: WidgetHtmlComponent},
+
 
 ];
 export const routing = RouterModule.forRoot(appRoutes);

@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {UserService} from './services/user.services.client';
 import {routing} from './app.routing';
 import {HttpModule} from '@angular/http';
+import {QuillEditorModule} from 'ngx-quill-editor';
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './views/user/login/login.component';
@@ -27,6 +28,8 @@ import {WidgetHeadingComponent} from './views/widget/widget-edit/widget-heading/
 import {WidgetImageComponent} from './views/widget/widget-edit/widget-image/widget-image.component';
 import {WidgetYoutubeComponent} from './views/widget/widget-edit/widget-youtube/widget-youtube.component';
 import { WbdvSortableDirective } from './views/widget/widget-list/wbdv-sortable.directive';
+import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widget-text.component';
+import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widget-html.component';
 
 @NgModule({
   declarations: [
@@ -47,12 +50,15 @@ import { WbdvSortableDirective } from './views/widget/widget-list/wbdv-sortable.
     WidgetChooserComponent,
     WidgetEditComponent,
     WbdvSortableDirective,
+    WidgetTextComponent,
+    WidgetHtmlComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     routing,
-    HttpModule
+    HttpModule,
+    QuillEditorModule
   ],
   providers: [UserService, WebsiteService, PageService, WidgetService, {provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]

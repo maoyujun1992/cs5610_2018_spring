@@ -20,15 +20,29 @@
             name="text"
             type="text"
             class="form-control"
-            placeholder="{{widget.text}}"
-            />
-          <label class="lab-no-m">Size</label>
+            placeholder="{{text}}"
+          />
+          <label class="lab-no-m">Rows</label>
           <input
-            [(ngModel)]="size"
-            type="text"
-            name="size"
+            [(ngModel)]="rows"
+            type="number"
+            name="rows"
             class="form-control"
-            placeholder="{{widget.size}}">
+            placeholder="{{rows}}"/>
+          <label class="lab-no-m">Placeholder</label>
+          <input
+            [(ngModel)]="placeholder"
+            type="text"
+            name="placeholder"
+            class="form-control"
+            placeholder="{{placeholder}}"/>
+          <span><label class="lab-no-m">Formatted</label></span>
+          <input [(ngModel)] = "formatted"
+                 type="checkbox"
+                 name="formatted"
+                 [checked]=true
+                 placeholder="formatted"/>
+
         </div>
       </form>
       <a routerLink="../" class="btn btn-danger btn-block" (click)="delete()">Delete</a>
@@ -42,3 +56,4 @@
 </div>
 </body>
 </html>
+

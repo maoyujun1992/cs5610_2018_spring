@@ -44,7 +44,7 @@ export class WidgetImageComponent implements OnInit {
           } else {
             this.widget = new Widget('', '', '', '', '', '', '');
             this.text = this.widget.text;
-            this.imgurl = this.widget.url.toString();
+            this.imgurl = this.widget.url;
             this.width = this.widget.width;
           }
         }
@@ -53,6 +53,7 @@ export class WidgetImageComponent implements OnInit {
 
 
   updateOrCreate() {
+    console.log(this.widgetForm.value.imgurl);
     if (this.widgetId !== undefined) {
       this.widget.text = this.widgetForm.value.text;
       this.widget.width = this.widgetForm.value.width;
