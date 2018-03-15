@@ -53,15 +53,18 @@ export class WidgetImageComponent implements OnInit {
 
 
   updateOrCreate() {
-    this.widget.text = this.widgetForm.value.text;
-    this.widget.width = this.widgetForm.value.width;
-    this.widget.url = this.widgetForm.value.url;
-    this.widget.widgetType = 'Image';
-    if (this.websiteId !== undefined) {
+    if (this.widgetId !== undefined) {
+      this.widget.text = this.widgetForm.value.text;
+      this.widget.width = this.widgetForm.value.width;
+      this.widget.url = this.widgetForm.value.imgurl;
       return this.widgetService.updateWidget(this.widgetId, this.widget).subscribe((returnWidget: Widget) => {
         this.router.navigate(['../'], {relativeTo: this.activatedRoute});
       });
     } else {
+      this.widget.text = this.widgetForm.value.text;
+      this.widget.width = this.widgetForm.value.width;
+      this.widget.url = this.widgetForm.value.imgurl;
+      this.widget.widgetType = 'Image';
       return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
         this.widget = returnWidget;
         this.router.navigate(['../../'], {relativeTo: this.activatedRoute});

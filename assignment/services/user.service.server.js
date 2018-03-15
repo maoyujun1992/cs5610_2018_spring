@@ -59,6 +59,10 @@ module.exports = function (app) {
         return user.username === username && user.password === password;
       });
     }
+    if(!user){
+      res.error.send();
+      return;
+    }
     res.send(user);
   }
 

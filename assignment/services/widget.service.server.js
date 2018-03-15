@@ -1,6 +1,6 @@
 module.exports = function (app) {
   var multer = require('multer');
-  var upload = multer({ dest: __dirname+'/../../src/assets/uploads' });
+  var upload = multer({dest: __dirname + '/../../src/assets/uploads'});
 
   app.post("/api/page/:pageId/widget", createWidget);
   app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
@@ -14,10 +14,24 @@ module.exports = function (app) {
   var widgets = [
     {_id: '123', widgetType: 'Heading', pageId: '321', size: '2', text: 'GIZMODO', width: '', url: ''},
     {_id: '234', widgetType: 'Heading', pageId: '321', size: '4', text: 'Lorem ipsum', width: '', url: ''},
-    {_id: '345', widgetType: 'Image', pageId: '321', size: '', text: '', width: '100%', url: 'http://www.letsintern.com/blog/wp-content/uploads/2014/05/marvel.jpeg'
+    {
+      _id: '345',
+      widgetType: 'Image',
+      pageId: '321',
+      size: '',
+      text: '',
+      width: '100%',
+      url: 'http://www.letsintern.com/blog/wp-content/uploads/2014/05/marvel.jpeg'
     },
     {_id: '567', widgetType: 'Heading', pageId: '321', size: '4', text: 'Lorem ipsum', width: '', url: ''},
-    {_id: '678', widgetType: 'Youtube', pageId: '321', size: '', text: '', width: '100%', url: 'https://www.youtube.com/embed/K0tXliGLb9U'
+    {
+      _id: '678',
+      widgetType: 'Youtube',
+      pageId: '321',
+      size: '',
+      text: '',
+      width: '100%',
+      url: 'https://www.youtube.com/embed/K0tXliGLb9U'
     },
   ];
 
@@ -37,9 +51,28 @@ module.exports = function (app) {
     var size = myFile.size;
     var mimetype = myFile.mimetype;
 
-    for (var x = 0; x < widgets.length; x++) {
-      if (widgets[x]._id === widgetId) {
-        widgets[x].url = '/uploads/' + filename;
+    if (widgetId === '') {
+      widgetId = '' + Math.round(Math.random() * 1000);
+      const newWidget = {
+        _id: '',
+        widgetType: '',
+        pageId: '',
+        size: '',
+        text: '',
+        width: '',
+        url: ''
+      };
+      newWidget.widgetType='Image';
+      newWidget.pageId = pageId;
+      newWidget.url = '/uploads/' + filename;
+      newWidget._id = widgetId;
+      newWidget.width = width;
+      widgets.push(newWidget);
+    } else {
+      for (var x = 0; x < widgets.length; x++) {
+        if (widgets[x]._id === widgetId) {
+          widgets[x].url = '/uploads/' + filename;
+        }
       }
     }
     res.redirect("http://localhost:3100/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
@@ -50,16 +83,16 @@ module.exports = function (app) {
     var pageId = req.params.pageId;
     var startIndex = parseInt(req.query.start);
     var endIndex = parseInt(req.query.end);
-    if(endIndex > startIndex){
-     var temp =  widgets[startIndex];
-     for(var i = startIndex; i < endIndex; i++){
-       widgets[i] = widgets[i+1];
-     }
-     widgets[endIndex] = temp;
-    }else{
+    if (endIndex > startIndex) {
       var temp = widgets[startIndex];
-      for(var i = startIndex; i > endIndex; i--){
-        widgets[i] = widgets[i-1];
+      for (var i = startIndex; i < endIndex; i++) {
+        widgets[i] = widgets[i + 1];
+      }
+      widgets[endIndex] = temp;
+    } else {
+      var temp = widgets[startIndex];
+      for (var i = startIndex; i > endIndex; i--) {
+        widgets[i] = widgets[i - 1];
       }
       widgets[endIndex] = temp;
     }

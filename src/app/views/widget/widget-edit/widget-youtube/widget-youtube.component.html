@@ -6,7 +6,7 @@
     <div class="card-header">
       <a routerLink="../"><i class="fa fa-chevron-left black-icon" aria-hidden="true"></i></a>
       <strong class="heading-padding text-muted">Widget Edit</strong>
-      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()" [disabled]="!f.valid"><i
+      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()"><i
         class="fa fa-check black-icon" aria-hidden="true"></i></button>
     </div>
     <div class="card-body">
@@ -29,10 +29,6 @@
                  ngModel=""
                  required
                  #url="ngModel"/>
-          <p class="help-block"
-             *ngIf="!url.valid && url.touched">
-            Please enter url!
-          </p>
           <label class="lab-no-m">Width</label>
           <input type="text"
                  [(ngModel)]="width"
