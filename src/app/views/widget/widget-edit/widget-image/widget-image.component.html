@@ -22,14 +22,13 @@
             class="form-control"
             placeholder="{{text}}">
           <label class="lab-no-m">URL</label>
-          <input type="url"
+          <input
+            [(ngModel)]="imgurl"
+              type="url"
                  value="{{imgurl}}"
                  name="imgurl"
                  class="form-control"
-                 placeholder="{{imgurl}}"
-                 ngModel=""
-                 required
-                 #url="ngModel"/>
+                 placeholder="{{imgurl}}"/>
           <label class="lab-no-m">Width</label>
           <input type="text"
                  [(ngModel)]="width"
