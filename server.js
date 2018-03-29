@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 const http = require('http');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://maoyujun:myj19920610@ds263707.mlab.com:63707/heroku_j5ljcbl0');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
