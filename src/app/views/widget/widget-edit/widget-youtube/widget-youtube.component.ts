@@ -38,7 +38,7 @@ export class WidgetYoutubeComponent implements OnInit {
         this.width = this.widget.width;
       });
     } else {
-      this.widget = new Widget('', '', '', '', '', '', '');
+      this.widget = new Widget('', '', '', '', '', '', '', 0, '', false);
     }
     this.text = this.widget.text;
     this.url = this.widget.url;
@@ -58,7 +58,7 @@ export class WidgetYoutubeComponent implements OnInit {
     } else {
       return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
         this.widget = returnWidget;
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
       });
     }
   }

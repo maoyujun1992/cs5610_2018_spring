@@ -20,7 +20,7 @@ export class WidgetChooserComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         params => {
-          return this.widgetService.findWidgetsByPageId(this.pageId).subscribe((returnWidgets: Widget[]) => {
+          return this.widgetService.findWidgetsByPageId(params['pid']).subscribe((returnWidgets: Widget[]) => {
             this.pageId = params['pid'];
             this.widgets = returnWidgets;
           });

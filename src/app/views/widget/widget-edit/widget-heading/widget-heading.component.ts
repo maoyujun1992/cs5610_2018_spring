@@ -34,7 +34,7 @@ export class WidgetHeadingComponent implements OnInit {
               this.size = this.widget.size;
             });
           } else {
-            this.widget = new Widget('', 'Heading', '', '', '', '', '');
+            this.widget = new Widget('', 'Heading', '', '', '', '', '', 0, '', false);
             this.text = this.widget.text;
             this.size = this.widget.size;
           }

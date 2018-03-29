@@ -30,6 +30,9 @@ import {WidgetYoutubeComponent} from './views/widget/widget-edit/widget-youtube/
 import { WbdvSortableDirective } from './views/widget/widget-list/wbdv-sortable.directive';
 import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widget-text.component';
 import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widget-html.component';
+import { FlickrImageSearchComponent } from './views/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component';
+import {FlickrService} from './services/flickr.service.client';
+import {OrderByPipe} from './views/widget/widget-list/order-by-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,8 @@ import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widg
     WbdvSortableDirective,
     WidgetTextComponent,
     WidgetHtmlComponent,
+    FlickrImageSearchComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,7 @@ import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widg
     HttpModule,
     QuillEditorModule
   ],
-  providers: [UserService, WebsiteService, PageService, WidgetService, {provide: APP_BASE_HREF, useValue: '/'}],
+  providers: [UserService, WebsiteService, PageService, WidgetService, FlickrService, {provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

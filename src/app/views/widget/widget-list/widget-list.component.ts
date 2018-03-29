@@ -10,7 +10,8 @@ import {Widget} from '../../../models/widget.model.client';
   styleUrls: ['../../../app.component.css']
 })
 export class WidgetListComponent implements OnInit {
-  widgets = [];
+  widgets = [{}];
+  widget = {};
   pageId: String;
 
   constructor(private domSanitizer: DomSanitizer, private widgetService: WidgetService, private activatedRoute: ActivatedRoute) {
@@ -24,9 +25,9 @@ export class WidgetListComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         params => {
-          return this.widgetService.findWidgetsByPageId(params['pid']).subscribe((returnWidgets: Widget[]) => {
+          return this.widgetService.findWidgetsByPageId(params['pid']).subscribe((data: any) => {
             this.pageId = params['pid'];
-            this.widgets = returnWidgets;
+            this.widgets = data;
           });
         }
       );
@@ -34,6 +35,7 @@ export class WidgetListComponent implements OnInit {
 
   reorderWidgets(indexes) {
     // call widget service function to update widget as per index
+    console.log(this.pageId);
     this.widgetService.reorderWidgets(indexes.startIndex, indexes.endIndex, this.pageId)
       .subscribe(
         (data) => console.log(data)

@@ -9,8 +9,9 @@ export class Widget {
   rows: number;
   placeholder: String;
   formatted: boolean;
+  position: number;
 
-  constructor(_id, widgetType, pageId, size, text, width, url, rows = 1, placeholder = 'place', formatted = false) {
+  constructor(_id, widgetType, pageId, size, text, width, url, rows = 1, placeholder = 'place', formatted = false, position = -1) {
     this._id = _id;
     this.widgetType = widgetType;
     this.size = size;
@@ -21,5 +22,6 @@ export class Widget {
     this.rows = rows;
     this.placeholder = placeholder;
     this.formatted = formatted;
+    this.position = position;
   }
 }

@@ -53,7 +53,6 @@ export class WidgetImageComponent implements OnInit {
 
 
   updateOrCreate() {
-    console.log(this.widgetForm.value.imgurl);
     if (this.widgetId !== undefined) {
       this.widget.text = this.widgetForm.value.text;
       this.widget.width = this.widgetForm.value.width;
@@ -79,6 +78,22 @@ export class WidgetImageComponent implements OnInit {
       });
     } else {
       this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+    }
+  }
+
+  toFlickr() {
+    if (this.widgetId !== undefined) {
+      this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId
+      + '/widget/' + this.widgetId + '/flickr']);
+    } else {
+      this.widget.text = this.widgetForm.value.text;
+      this.widget.width = this.widgetForm.value.width;
+      this.widget.widgetType = 'Image';
+      return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
+        this.widget = returnWidget;
+        this.widgetId = this.widget._id;
+        this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId
+        + '/widget/' + this.widgetId + '/flickr']);      });
     }
   }
 

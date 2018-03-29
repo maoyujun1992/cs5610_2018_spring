@@ -10,7 +10,7 @@ export class WidgetService {
 
   baseUrl = environment.baseUrl;
 
-  createWidget(pageId: String, widget: Widget) {
+  createWidget(pageId, widget) {
     const url = this.baseUrl + '/api/page/' + pageId + '/widget';
     return this.http.post(url, widget).map((response: Response) => {
       return response.json();
@@ -31,7 +31,7 @@ export class WidgetService {
     });
   }
 
-  updateWidget(widgetId: String, widget: Widget) {
+  updateWidget(widgetId, widget) {
     const url = this.baseUrl + '/api/widget/' + widgetId;
     return this.http.put(url, widget).map((response: Response) => {
       return response.json();
