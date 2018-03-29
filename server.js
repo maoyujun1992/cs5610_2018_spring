@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://maoyujun:myj19920610@ds263707.mlab.com:63707/heroku_j5ljcbl0');
+var connectionString = 'mongodb://admin:admin@ds263707.mlab.com:63707/heroku_j5ljcbl0';
+mongoose.connect(connectionString);
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
