@@ -16,6 +16,7 @@ module.exports = function (app) {
   var passport = require('passport');
   var LocalStrategy = require('passport-local').Strategy;
   var FacebookStrategy = require('passport-facebook').Strategy;
+  var sharedService = require('../../src/app/services/shared.service');
 
 
   app.post('/api/login', passport.authenticate('local'), login);
@@ -25,8 +26,8 @@ module.exports = function (app) {
 
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/login',
-      failureRedirect: '/login'
+      successRedirect: '/#/profile',
+      failureRedirect: '/#/login'
     }));
   app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
 
@@ -41,6 +42,7 @@ module.exports = function (app) {
       .then(
         function (user) {
           if (user) {
+            sharedService.user = user;
             return done(null, user);
           } else {
             var names = profile.displayName.split(" ");
@@ -54,6 +56,7 @@ module.exports = function (app) {
                 token: token
               }
             };
+            sharedService.user = newFacebookUser;
             return userModel.createUser(newFacebookUser);
           }
         },

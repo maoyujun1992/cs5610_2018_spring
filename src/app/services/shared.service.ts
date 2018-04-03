@@ -4,5 +4,5 @@ import {User} from '../models/user.model.client';
 @Injectable()
 
 export class SharedService {
-  user = new User('', '', '', '', '', '');
+  user = '';
 }

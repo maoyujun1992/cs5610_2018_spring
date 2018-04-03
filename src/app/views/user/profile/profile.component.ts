@@ -13,7 +13,7 @@ import {SharedService} from '../../../services/shared.service';
 export class ProfileComponent implements OnInit {
   @ViewChild('f') loginForm: NgForm;
   userId: String;
-  user: User;
+  user: {};
   username: String;
   email: String;
   firstName: String;
@@ -43,11 +43,11 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     this.user = this.sharedService.user;
-    this.username = this.user.username;
-    this.firstName = this.user.firstName;
-    this.lastName = this.user.lastName;
-    this.email = this.user.email;
-    this.userId = this.user._id;
+    this.username = this.user['username'];
+    this.firstName = this.user['firstName'];
+    this.lastName = this.user['lastName'];
+    this.email = this.user['email'];
+    this.userId = this.user['_id'];
   }
 
   logout() {
@@ -58,11 +58,11 @@ export class ProfileComponent implements OnInit {
   }
 
   update() {
-    this.user.username = this.loginForm.value.username;
-    this.user.firstName = this.loginForm.value.firstName;
-    this.user.lastName = this.loginForm.value.lastName;
-    this.user.email = this.loginForm.value.email;
-    this.userService.updateUser(this.userId, this.user).subscribe((returnUser: User) => {
+    this.user['username'] = this.loginForm.value.username;
+    this.user['firstName'] = this.loginForm.value.firstName;
+    this.user['lastName'] = this.loginForm.value.lastName;
+    this.user['email'] = this.loginForm.value.email;
+    this.userService.updateUser(this.userId, this.user).subscribe((data: any) => {
       this.router.navigate(['/user', this.userId]);
     });
   }
