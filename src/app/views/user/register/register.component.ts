@@ -29,9 +29,9 @@ export class RegisterComponent implements OnInit {
       this.errorFlag = true;
     } else {
       const user = new User('', this.username, this.password, '', '', '');
-      this.userService.register(this.username, this.password).subscribe((returnUser: User) => {
-          this.sharedService.user = returnUser;
-          this.router.navigate(['/user', returnUser._id]);
+      this.userService.register(this.username, this.password).subscribe((data: any) => {
+          this.sharedService.user = data;
+          this.router.navigate(['/user', data._id]);
         },
         (error: any) => {
           alert('Username is in use.');
