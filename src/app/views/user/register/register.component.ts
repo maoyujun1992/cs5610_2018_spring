@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {UserService} from '../../../services/user.services.client';
 import {Router} from '@angular/router';
 import {User} from '../../../models/user.model.client';
+import {SharedService} from '../../../services/shared.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   errorFlag: boolean;
   errorMsg: String;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private sharedService: SharedService) {
   }
 
   register() {
@@ -28,9 +29,14 @@ export class RegisterComponent implements OnInit {
       this.errorFlag = true;
     } else {
       const user = new User('', this.username, this.password, '', '', '');
-      this.userService.createUser(user).subscribe((returnUser: User) => {
-        this.router.navigate(['/user', returnUser._id]);
-      });
+      this.userService.register(this.username, this.password).subscribe((returnUser: User) => {
+          this.sharedService.user = returnUser;
+          this.router.navigate(['/user', returnUser._id]);
+        },
+        (error: any) => {
+          alert('Username is in use.');
+        }
+      );
     }
   }
 

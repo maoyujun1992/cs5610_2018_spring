@@ -1,4 +1,9 @@
 module.exports = function (app) {
+  var facebookConfig = {
+    clientID: '1329664757133224',
+    clientSecret: 'b1f9918a53961d23ba3f308885d76a99',
+    callbackURL: 'https://cs5610-webdev-yujunm.herokuapp.com/auth/facebook/callback'
+  };
 
   app.put("/api/user/:userId", updateUser);
   app.get("/api/user/:userId", findUserById);
@@ -6,8 +11,143 @@ module.exports = function (app) {
   app.get("/api/user", findUserByCredentials);
   app.post("/api/user", createUser);
   app.delete("/api/user/:userId", deleteUser);
-  var userModel = require("../model/user/user.model.server");
 
+  var userModel = require("../model/user/user.model.server");
+  var passport = require('passport');
+  var LocalStrategy = require('passport-local').Strategy;
+  var FacebookStrategy = require('passport-facebook').Strategy;
+
+
+  app.post('/api/login', passport.authenticate('local'), login);
+  app.post('/api/logout', logout);
+  app.post('/api/register', register);
+  app.post('/api/loggedIn', loggedIn);
+
+  app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+      successRedirect: '/#/profile',
+      failureRedirect: '/#/login'
+    }));
+  app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
+
+  passport.serializeUser(serializeUser);
+  passport.deserializeUser(deserializeUser);
+  passport.use(new LocalStrategy(localStrategy));
+  passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+
+  function facebookStrategy(token, refreshToken, profile, done) {
+    userModel
+      .findFacebookUser(profile.id)
+      .then(
+        function (user) {
+          if (user) {
+            return done(null, user);
+          } else {
+            var names = profile.displayName.split(" ");
+            var newFacebookUser = {
+              lastName: names[1],
+              firstName: names[0],
+              email: profile.emails ? profile.emails[0].value : "",
+              facebook: {
+                id: profile.id,
+                token: token
+              }
+            };
+            return userModel.createUser(newFacebookUser);
+          }
+        },
+        function (err) {
+          if (err) {
+            return done(err);
+          }
+        }
+      )
+      .then(
+        function (user) {
+          return done(null, user);
+        },
+        function (err) {
+          if (err) {
+            return done(err);
+          }
+        }
+      );
+  }
+
+  function loggedIn(req, res) {
+    res.send(req.isAuthenticated() ? req.user : '0');
+  }
+
+  function register(req, res) {
+    var user = req.body;
+    userModel
+      .findUserByUsername(user.username)
+      .then(function (data) {
+        if (data) {
+          res.status(400).send('Username is in use!');
+          return;
+        } else {
+          userModel
+            .createUser(user)
+            .then(
+              function (user) {
+                if (user) {
+                  req.login(user, function (err) {
+                    if (err) {
+                      res.status(400).send(err);
+                    } else {
+                      res.json(user);
+                    }
+                  });
+                }
+              }
+            );
+        }
+      })
+
+  }
+
+  function login(req, res) {
+    var user = req.user;
+    res.json(user);
+  }
+
+  function logout(req, res) {
+    req.logOut();
+    res.send(200);
+  }
+
+  function localStrategy(username, password, done) {
+    userModel.findUserByCredentials(username, password)
+      .then(function (user) {
+          if (user.username === username && user.password === password) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        },
+        function (err) {
+          if (err) {
+            return done(err);
+          }
+        })
+  }
+
+  function deserializeUser(user, done) {
+    userModel.findUserById(user._id)
+      .then(
+        function (user) {
+          done(null, user);
+        },
+        function (err) {
+          done(err, null);
+        }
+      )
+  }
+
+  function serializeUser(user, done) {
+    done(null, user);
+  }
 
   function deleteUser(req, res) {
     var userId = req.params["userId"];
@@ -57,7 +197,7 @@ module.exports = function (app) {
   function updateUser(req, res) {
     var userId = req.params.userId;
     var user = req.body;
-    userModel.updateUser(userId, user).then(function(user){
+    userModel.updateUser(userId, user).then(function (user) {
       res.send(user);
     });
   }

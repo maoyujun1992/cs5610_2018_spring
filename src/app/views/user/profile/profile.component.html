@@ -42,7 +42,7 @@
       <a routerLink="/user/{{userId}}/website" class="btn btn-primary btn-block text-white">Website</a>
       <a routerLink="/login" (click)="delete()" class="btn btn-danger btn-block text-white">Delete</a>
 
-      <a routerLink="/login" class="btn btn-danger btn-block text-white">Logout</a>
+      <a (click)="logout()" class="btn btn-danger btn-block text-white">Logout</a>
     </div>
 
     <div class="card-footer bg-primary text-white fixed-bottom">

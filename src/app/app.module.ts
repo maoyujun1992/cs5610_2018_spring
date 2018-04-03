@@ -5,6 +5,7 @@ import {UserService} from './services/user.services.client';
 import {routing} from './app.routing';
 import {HttpModule} from '@angular/http';
 import {QuillEditorModule} from 'ngx-quill-editor';
+import {SharedService} from './services/shared.service';
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './views/user/login/login.component';
@@ -23,16 +24,17 @@ import {APP_BASE_HREF} from '@angular/common';
 import {WebsiteService} from './services/website.service.client';
 import {PageService} from './services/page.service.client';
 import {WidgetService} from './services/widget.service.client';
-import { WidgetEditComponent } from './views/widget/widget-edit/widget-edit.component';
+import {WidgetEditComponent} from './views/widget/widget-edit/widget-edit.component';
 import {WidgetHeadingComponent} from './views/widget/widget-edit/widget-heading/widget-heading.component';
 import {WidgetImageComponent} from './views/widget/widget-edit/widget-image/widget-image.component';
 import {WidgetYoutubeComponent} from './views/widget/widget-edit/widget-youtube/widget-youtube.component';
-import { WbdvSortableDirective } from './views/widget/widget-list/wbdv-sortable.directive';
-import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widget-text.component';
-import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widget-html.component';
-import { FlickrImageSearchComponent } from './views/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component';
+import {WbdvSortableDirective} from './views/widget/widget-list/wbdv-sortable.directive';
+import {WidgetTextComponent} from './views/widget/widget-edit/widget-text/widget-text.component';
+import {WidgetHtmlComponent} from './views/widget/widget-edit/widget-html/widget-html.component';
+import {FlickrImageSearchComponent} from './views/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component';
 import {FlickrService} from './services/flickr.service.client';
 import {OrderByPipe} from './views/widget/widget-list/order-by-pipe.pipe';
+import {AuthGuard} from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import {OrderByPipe} from './views/widget/widget-list/order-by-pipe.pipe';
     HttpModule,
     QuillEditorModule
   ],
-  providers: [UserService, WebsiteService, PageService, WidgetService, FlickrService, {provide: APP_BASE_HREF, useValue: '/'}],
+  providers: [UserService, WebsiteService, PageService, WidgetService, FlickrService,
+    SharedService, AuthGuard, {provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,7 +1,3 @@
-// this API for the database
-//encapsulate all CRUD operations in this
-//Only database operations happen here
-
 var mongoose = require("mongoose");
 var UserSchema = require("./user.schema.server")();
 var User = mongoose.model("User", UserSchema); //mongo plurarizes
@@ -9,14 +5,19 @@ var pageModel = require("../page/page.model.server");
 var widgetModel = require("../widget/widget.model.server");
 var websiteModel = require("../website/website.model.server");
 
- User.createUser = createUser,
-  User.findUserById = findUserById,
-  User.findUserByCredentials = findUserByCredentials,
-  User.deleteUser = deleteUser,
-  User.updateUser = updateUser,
-  User.findUserByUsername = findUserByUsername;
+User.createUser = createUser;
+User.findUserById = findUserById;
+User.findUserByCredentials = findUserByCredentials;
+User.deleteUser = deleteUser;
+User.updateUser = updateUser;
+User.findUserByUsername = findUserByUsername;
+User.findFacebookUser = findFacebookUser;
 
-//findByID returns just one
+
+function findFacebookUser(id) {
+  return User.findOne({"facebook.id": id});
+}
+
 function findUserById(userId) {
   return User.findById({_id: userId});
 }
@@ -26,12 +27,11 @@ function findUserByUsername(username) {
 }
 
 function updateUser(userId, user) {
-  //ignore _id
   delete user._id;
   return User
     .update({_id: userId}, {
         $set: {
-          username : user.username,
+          username: user.username,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email
@@ -42,8 +42,7 @@ function updateUser(userId, user) {
 
 
 function deleteUser(userId) {
-
-   websiteModel.find({developerId:userId}).then(function (websites) {
+  websiteModel.find({developerId: userId}).then(function (websites) {
     websites.forEach(function (website) {
       pageModel.find({_website: website._id}).then(function (pages) {
         pages.forEach(function (page) {
@@ -53,7 +52,7 @@ function deleteUser(userId) {
     })
   });
 
-  websiteModel.find({developerId:userId}).then(function (websites) {
+  websiteModel.find({developerId: userId}).then(function (websites) {
     websites.forEach(function (website) {
       pageModel.remove({_website: website._id}).exec();
     })

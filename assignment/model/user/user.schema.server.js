@@ -8,6 +8,10 @@ module.exports = function () {
     email : String,
     lastName : String,
     websites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Website'}],
+    facebook: {
+      id: String,
+      token: String
+    },
     dateCreated : {type: Date, default : Date.now} //Date.now is the current time
   }, {collection: "assignment.user" });
 

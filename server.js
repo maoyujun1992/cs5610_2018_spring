@@ -1,20 +1,30 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var connectionString = 'mongodb://admin:admin@ds263707.mlab.com:63707/heroku_j5ljcbl0';
+var connectionString ='mongodb://127.0.0.1:27017/webdev';
+//var connectionString = 'mongodb://admin:admin@ds263707.mlab.com:63707/heroku_j5ljcbl0';
 mongoose.connect(connectionString);
+
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 const http = require('http');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var passport = require('passport');
 
+app.use(session({
+  secret: 'this is the secret',
+  resave: true,
+  saveUninitialized: true
+}));
 
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, 'src/assets')));
-
-
 
 //CORS
 app.use(function(reg, res, next){

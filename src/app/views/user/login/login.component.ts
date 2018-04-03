@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {UserService} from '../../../services/user.services.client';
 import {User} from '../../../models/user.model.client';
+import {SharedService} from '../../../services/shared.service';
 
 
 @Component({
@@ -17,19 +18,21 @@ export class LoginComponent implements OnInit {
   errorFlag: boolean;
   errorMsg: String;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private sharedService: SharedService, private router: Router) {
   }
 
   login() {
     this.username = this.loginForm.value.username;
     this.password = this.loginForm.value.password;
 
-    this.userService.findUserByCredential(this.username, this.password)
-      .subscribe((user: User) => {
-          this.router.navigate(['/user', user._id]); },
-      (error: 404) => {
+    this.userService.login(this.username, this.password)
+      .subscribe((data: any) => {
+          this.sharedService.user = data;
+          this.router.navigate(['/user', data._id]);
+        },
+        (error: any) => {
           this.errorFlag = true;
-          this.router.navigate(['/login']);
+          // this.router.navigate(['/login']);
         });
   }
 

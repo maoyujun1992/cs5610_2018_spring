@@ -3,6 +3,7 @@ import {UserService} from '../../../services/user.services.client';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {User} from '../../../models/user.model.client';
+import {SharedService} from '../../../services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,11 +19,13 @@ export class ProfileComponent implements OnInit {
   firstName: String;
   lastName: String;
 
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private userService: UserService,
+              private sharedService: SharedService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
+    this.getUser();
+    /*this.activatedRoute.params.subscribe(params => {
       return this.userService.findUserById(params['uid']).subscribe(
         (returnUser: User) => {
           this.userId = params['uid'];
@@ -35,7 +38,23 @@ export class ProfileComponent implements OnInit {
         }
       );
     });
+*/
+  }
 
+  getUser() {
+    this.user = this.sharedService.user;
+    this.username = this.user.username;
+    this.firstName = this.user.firstName;
+    this.lastName = this.user.lastName;
+    this.email = this.user.email;
+    this.userId = this.user._id;
+  }
+
+  logout() {
+    this.userService.logout()
+      .subscribe(
+        (data: any) => this.router.navigate(['/login'])
+      );
   }
 
   update() {
