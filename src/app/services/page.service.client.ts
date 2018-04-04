@@ -2,11 +2,14 @@ import {Injectable} from '@angular/core';
 import {Page} from '../models/page.model.client';
 import {Http, Response} from '@angular/http';
 import {environment} from '../../environments/environment';
+
 @Injectable()
 export class PageService {
   constructor(private http: Http) {
   }
+
   baseUrl = environment.baseUrl;
+
   createPage(websiteId: String, page: Page) {
     const url = this.baseUrl + '/api/website/' + websiteId + '/page';
     return this.http.post(url, page).map((response: Response) => {

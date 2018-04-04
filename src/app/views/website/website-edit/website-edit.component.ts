@@ -12,6 +12,8 @@ import {WebsiteService} from '../../../services/website.service.client';
 })
 export class WebsiteEditComponent implements OnInit {
   @ViewChild('f') websiteForm: NgForm;
+  errorFlag: boolean;
+  errorMsg: String;
   websiteId: String;
   website: Website;
   name: String;
@@ -23,6 +25,8 @@ export class WebsiteEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.errorFlag = false;
+    this.errorMsg = 'Please enter a website name';
     this.activatedRoute.params
       .subscribe(
         params => {
@@ -48,9 +52,14 @@ export class WebsiteEditComponent implements OnInit {
 
   update() {
     this.website.name = this.websiteForm.value.name;
-    this.website.description = this.websiteForm.value.description;
-    return this.websiteService.updateWebsite(this.websiteId, this.website).subscribe((website: Website) => {
-    });
+    if (this.website.name.trim() === '' || this.website.name === undefined) {
+      this.errorFlag = true;
+    } else {
+      this.website.description = this.websiteForm.value.description;
+      return this.websiteService.updateWebsite(this.websiteId, this.website).subscribe((website: Website) => {
+        this.router.navigate(['../'], {relativeTo: this.activatedRoute} );
+      });
+    }
   }
 
   delete() {

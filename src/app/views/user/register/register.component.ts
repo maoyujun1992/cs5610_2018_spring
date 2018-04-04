@@ -34,7 +34,8 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/user', data._id]);
         },
         (error: any) => {
-          alert('Username is in use.');
+          this.errorFlag = true;
+          this.errorMsg = 'Username is in use';
         }
       );
     }

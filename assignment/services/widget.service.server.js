@@ -38,25 +38,31 @@ module.exports = function (app) {
         width: '',
         url: ''
       };
-      newWidget.widgetType='Image';
+
+      newWidget.widgetType = 'Image';
       newWidget.pageId = pageId;
       newWidget.url = '/uploads/' + filename;
       newWidget._id = widgetId;
       newWidget.width = width;
       widgetModel.findAllWidgetsForPage(pageId).then(function (widgets) {
         newWidget.position = widgets.length;
-        widgetModel.createWidget(pageId,newWidget).then(function (widget) {
-          this.widgetId = widget._id;
+        widgetModel.createWidget(pageId, newWidget).then(function (widget) {
+          widgetId = widget._id;
+          res.redirect("https://cs5610-webdev-yujunm.herokuapp.com/user/" + userId + "/website/"
+            + websiteId + "/page/" + pageId + "/widget/" + widgetId)
+
         });
       });
     } else {
       widgetModel.findWidgetById(widgetId).then(function (widget) {
-        widget.url= '/uploads/' + filename;
-        widgetModel.updateWidget(widgetId,widget);
+        widget.url = '/uploads/' + filename;
+        widgetModel.updateWidget(widgetId, widget);
+        res.redirect("http://localhost:3100/user/" + userId + "/website/"
+          + websiteId + "/page/" + pageId + "/widget/" + widgetId)
       });
     }
-
-    res.redirect("https://cs5610-webdev-yujunm.herokuapp.com/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId)
+    // http://localhost:3100
+    // https://cs5610-webdev-yujunm.herokuapp.com
 
   }
 
@@ -69,13 +75,12 @@ module.exports = function (app) {
 
   }
 
-
   function createWidget(req, res) {
     var widget = req.body;
     var pageId = req.params["pageId"];
     widgetModel.findAllWidgetsForPage(pageId).then(function (widgets) {
       widget.position = widgets.length;
-      widgetModel.createWidget(pageId,widget).then(function (widget) {
+      widgetModel.createWidget(pageId, widget).then(function (widget) {
         res.json(widget);
       });
     });
@@ -99,19 +104,19 @@ module.exports = function (app) {
   function updateWidget(req, res) {
     var widgetId = req.params["widgetId"];
     var widget = req.body;
-    widgetModel.updateWidget(widgetId,widget).then(function (widget) {
+    widgetModel.updateWidget(widgetId, widget).then(function (widget) {
       res.json(widget);
     });
   }
 
   function deleteWidget(req, res) {
     var widgetId = req.params["widgetId"];
-    widgetModel.findWidgetById(widgetId).then(function(widget) {
+    widgetModel.findWidgetById(widgetId).then(function (widget) {
       widgetModel.updatePosition(widget._page, widget.position).then(function (widgets) {
         widgetModel.deleteWidget(widgetId).then(function (status) {
           res.send(status);
         });
       })
-    })
+    });
   }
 }

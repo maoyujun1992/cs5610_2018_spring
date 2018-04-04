@@ -1,7 +1,3 @@
-// this API for the database
-//encapsulate all CRUD operations in this
-//Only database operations happen here
-
 var mongoose = require("mongoose");
 var WebsiteSchema = require("./website.schema.server")();
 var Website = mongoose.model("Website", WebsiteSchema);
@@ -9,11 +5,11 @@ var pageModel = require("../page/page.model.server");
 var widgetModel = require("../widget/widget.model.server");
 
 
-Website.findAllWebsitesForUser = findAllWebsitesForUser,
-  Website.createWebsiteForUser = createWebsiteForUser,
-  Website.findWebsiteById = findWebsiteById,
-  Website.updateWebsite = updateWebsite,
-  Website.deleteWebsite = deleteWebsite;
+Website.findAllWebsitesForUser = findAllWebsitesForUser;
+Website.createWebsiteForUser = createWebsiteForUser;
+Website.findWebsiteById = findWebsiteById;
+Website.updateWebsite = updateWebsite;
+Website.deleteWebsite = deleteWebsite;
 
 
 function deleteWebsite(websiteId) {
@@ -37,7 +33,6 @@ function updateWebsite(websiteId, website) {
       }
     );
 }
-
 
 function findWebsiteById(websiteId) {
   return Website.findById(websiteId);

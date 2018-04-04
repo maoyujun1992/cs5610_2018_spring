@@ -1,7 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {WebsiteService} from '../../../services/website.service.client';
-import {Website} from '../../../models/website.model.client';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Page} from '../../../models/page.model.client';
 import {PageService} from '../../../services/page.service.client';
@@ -18,11 +16,15 @@ export class PageNewComponent implements OnInit {
   name: String;
   title: String;
   userId: String;
+  errorFlag: boolean;
+  errorMsg: String;
 
   constructor(private pageService: PageService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
+    this.errorFlag = false;
+    this.errorMsg = 'Please enter a page name.';
     this.activatedRoute.params
       .subscribe(
         params => {
@@ -35,8 +37,15 @@ export class PageNewComponent implements OnInit {
   create() {
     const page = new Page('', '', this.websiteId, '');
     page.name = this.pageForm.value.name;
-    page.title = this.pageForm.value.title;
-    return this.pageService.createPage(this.websiteId, page).subscribe((returnPage: Page) => {});
+    if (page.name === undefined || page.name.trim() === '') {
+      this.errorFlag = true;
+    } else {
+      page.title = this.pageForm.value.title;
+      return this.pageService.createPage(this.websiteId, page).subscribe((returnPage: Page) => {
+        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+
+      });
+    }
   }
 
 }

@@ -18,12 +18,16 @@ export class WidgetTextComponent implements OnInit {
   rows: number;
   formatted: boolean;
   placeholder: String;
-
+  errorFlag: boolean;
+  errorMsg: String;
+  name: String;
 
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
+    this.errorFlag = false;
+    this.errorMsg = 'Please enter a widget name';
     this.activatedRoute.params
       .subscribe(
         params => {
@@ -36,13 +40,15 @@ export class WidgetTextComponent implements OnInit {
               this.formatted = this.widget.formatted;
               this.rows = this.widget.rows;
               this.placeholder = this.widget.placeholder;
+              this.name = this.widget.name;
             });
           } else {
-            this.widget = new Widget('', 'Text', '', '', '', '', '', 0, '', false);
+            this.widget = new Widget('', '', 'Text', '', '', '', '', '');
             this.text = this.widget.text;
             this.formatted = this.widget.formatted;
             this.rows = this.widget.rows;
             this.placeholder = this.widget.placeholder;
+            this.name = this.widget.name;
           }
         }
       );
@@ -53,19 +59,27 @@ export class WidgetTextComponent implements OnInit {
   updateOrCreate() {
     this.widget.text = this.widgetForm.value.text;
     this.widget.formatted = this.widgetForm.value.formatted;
-    console.log(this.widget.formatted);
     this.widget.rows = this.widgetForm.value.rows;
     this.widget.placeholder = this.widgetForm.value.placeholder;
+    this.widget.name = this.widgetForm.value.name;
     this.widget.widgetType = 'Text';
     if (this.wgid !== undefined) {
-      return this.widgetService.updateWidget(this.wgid, this.widget).subscribe((returnWidget: Widget) => {
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
-      });
+      if (this.widget.name === undefined || this.widget.name.trim() === '') {
+        this.errorFlag = true;
+      } else {
+        return this.widgetService.updateWidget(this.wgid, this.widget).subscribe((returnWidget: Widget) => {
+          this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+        });
+      }
     } else {
-      return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
-        this.widget = returnWidget;
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
-      });
+      if (this.widget.name === undefined || this.widget.name.trim() === '') {
+        this.errorFlag = true;
+      } else {
+        return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
+          this.widget = returnWidget;
+          this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+        });
+      }
     }
   }
 
@@ -77,5 +91,4 @@ export class WidgetTextComponent implements OnInit {
       this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
     }
   }
-
 }

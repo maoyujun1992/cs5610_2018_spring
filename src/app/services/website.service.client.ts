@@ -6,7 +6,9 @@ import {Http, Response} from '@angular/http';
 export class WebsiteService {
   constructor(private http: Http) {
   }
+
   baseUrl = environment.baseUrl;
+
   createWebsite(userId, website) {
     const url = this.baseUrl + '/api/user/' + userId + '/website';
     return this.http.post(url, website).map((response: Response) => {

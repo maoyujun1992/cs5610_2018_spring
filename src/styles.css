@@ -36,3 +36,6 @@ input, textarea{
 .white-icon{
   color: white;
 }
+.icon-no-padding{
+  padding: 0px;
+}

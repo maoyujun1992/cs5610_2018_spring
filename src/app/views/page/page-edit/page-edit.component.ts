@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../../../services/page.service.client';
 import {NgForm} from '@angular/forms';
 import {Page} from '../../../models/page.model.client';
@@ -17,12 +17,15 @@ export class PageEditComponent implements OnInit {
   name: String;
   page: Page;
   title: String;
+  errorFlag: boolean;
+  errorMsg: String;
 
-  constructor(private pageService: PageService, private activatedRoute: ActivatedRoute) {
+  constructor(private pageService: PageService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
-
+    this.errorFlag = false;
+    this.errorMsg = 'Please enter a page name';
     this.activatedRoute.params
       .subscribe(
         params => {
@@ -42,11 +45,19 @@ export class PageEditComponent implements OnInit {
 
   update() {
     this.page.name = this.pageForm.value.name;
-    this.page.title = this.pageForm.value.title;
-    return this.pageService.updatePage(this.pageId, this.page).subscribe((returnPage: Page) => {});
+    if (this.page.name === undefined || this.page.name.trim() === '') {
+      this.errorFlag = true;
+    } else {
+      this.page.title = this.pageForm.value.title;
+      return this.pageService.updatePage(this.pageId, this.page).subscribe((returnPage: Page) => {
+        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+
+      });
+    }
   }
 
   delete() {
-    return this.pageService.deletePage(this.pageId).subscribe((returnPage: Page) => {});
+    return this.pageService.deletePage(this.pageId).subscribe((returnPage: Page) => {
+    });
   }
 }

@@ -1,19 +1,13 @@
-// this API for the database
-//encapsulate all CRUD operations in this
-//Only database operations happen here
-
 var mongoose = require("mongoose");
 var PageSchema = require("./page.schema.server")();
-var Page = mongoose.model("Page", PageSchema); //mongo plurarizes
+var Page = mongoose.model("Page", PageSchema);
 var Widget = require("../widget/widget.model.server");
 
-
-Page.findAllPagesForWebsite = findAllPagesForWebsite,
-  Page.createPage = createPage,
-  Page.updatePage = updatePage,
-  Page.findPageById = findPageById,
-  Page.deletePage = deletePage;
-
+Page.findAllPagesForWebsite = findAllPagesForWebsite;
+Page.createPage = createPage;
+Page.updatePage = updatePage;
+Page.findPageById = findPageById;
+Page.deletePage = deletePage;
 
 function findAllPagesForWebsite(websiteId) {
   return Page.find({_website: websiteId});
@@ -25,8 +19,6 @@ function createPage(websiteId, page) {
   return Page.create(page);
 
 }
-
-
 
 function updatePage(pageId, page) {
   delete page._id;
@@ -48,7 +40,6 @@ function deletePage(pageId) {
   Widget.remove({_page: pageId}).exec();
   return Page.remove({_id: pageId});
 }
-
 
 module.exports = Page;
 

@@ -16,12 +16,16 @@ export class WidgetHeadingComponent implements OnInit {
   widget: Widget;
   text: String;
   size: String;
-
+  name: String;
+  errorMsg: String;
+  errorFlag: boolean;
 
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
+    this.errorFlag = false;
+    this.errorMsg = 'Please enter a widget name.';
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
@@ -30,13 +34,15 @@ export class WidgetHeadingComponent implements OnInit {
           if (this.wgid !== undefined) {
             return this.widgetService.findWidgetById(this.wgid).subscribe((returnWidget: Widget) => {
               this.widget = returnWidget;
+              this.name = this.widget.name;
               this.text = this.widget.text;
               this.size = this.widget.size;
             });
           } else {
-            this.widget = new Widget('', 'Heading', '', '', '', '', '', 0, '', false);
+            this.widget = new Widget('', '', 'Heading', '', '', '', '', '', 0, '', false);
             this.text = this.widget.text;
             this.size = this.widget.size;
+            this.name = this.widget.name;
           }
         }
       );
@@ -47,16 +53,25 @@ export class WidgetHeadingComponent implements OnInit {
   updateOrCreate() {
     this.widget.text = this.widgetForm.value.text;
     this.widget.size = this.widgetForm.value.size;
+    this.widget.name = this.widgetForm.value.name;
     this.widget.widgetType = 'Heading';
     if (this.wgid !== undefined) {
-      return this.widgetService.updateWidget(this.wgid, this.widget).subscribe((returnWidget: Widget) => {
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
-      });
+      if (this.widget.name === undefined || this.widget.name.trim() === '') {
+        this.errorFlag = true;
+      } else {
+        return this.widgetService.updateWidget(this.wgid, this.widget).subscribe((returnWidget: Widget) => {
+          this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+        });
+      }
     } else {
-      return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
-        this.widget = returnWidget;
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
-      });
+      if (this.widget.name === undefined || this.widget.name.trim() === '') {
+        this.errorFlag = true;
+      } else {
+        return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
+          this.widget = returnWidget;
+          this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+        });
+      }
     }
   }
 

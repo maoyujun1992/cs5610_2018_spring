@@ -10,7 +10,9 @@ module.exports = function (app) {
     var website = req.body;
     var userId = req.params["userId"];
     website.developerId = userId;
-    websiteModel.createWebsiteForUser(website);
+    websiteModel.createWebsiteForUser(website).then(function (website) {
+      res.json(website);
+    });
   }
 
   function findAllWebsitesForUser(req, res) {

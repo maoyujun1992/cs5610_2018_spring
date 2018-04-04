@@ -18,11 +18,16 @@ export class WidgetYoutubeComponent implements OnInit {
   text: String;
   url: String;
   width: String;
+  errorFlag: boolean;
+  errorMsg: String;
+  name: String;
 
   constructor(private widgetService: WidgetService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
+    this.errorFlag = false;
+    this.errorMsg = 'Please enter a widget name.';
     this.activatedRoute.params
       .subscribe(
         params => {
@@ -36,30 +41,41 @@ export class WidgetYoutubeComponent implements OnInit {
         this.text = this.widget.text;
         this.url = this.widget.url;
         this.width = this.widget.width;
+        this.name = this.widget.name;
       });
     } else {
-      this.widget = new Widget('', '', '', '', '', '', '', 0, '', false);
+      this.widget = new Widget('', '', '', '', '', '', '', '');
+      this.name = this.widget.name;
+      this.text = this.widget.text;
+      this.url = this.widget.url;
+      this.width = this.widget.width;
     }
-    this.text = this.widget.text;
-    this.url = this.widget.url;
-    this.width = this.widget.width;
   }
 
 
   updateOrCreate() {
+    this.widget.name = this.widgetForm.value.name;
     this.widget.text = this.widgetForm.value.text;
     this.widget.width = this.widgetForm.value.width;
     this.widget.url = this.widgetForm.value.url;
     this.widget.widgetType = 'Youtube';
     if (this.wgid !== undefined) {
-      return this.widgetService.updateWidget(this.wgid, this.widget).subscribe((returnWidget: Widget) => {
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
-      });
+      if (this.widget.name === undefined || this.widget.name.trim() === '') {
+        this.errorFlag = true;
+      } else {
+        return this.widgetService.updateWidget(this.wgid, this.widget).subscribe((returnWidget: Widget) => {
+          this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+        });
+      }
     } else {
-      return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
-        this.widget = returnWidget;
-        this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
-      });
+      if (this.widget.name === undefined || this.widget.name.trim() === '') {
+        this.errorFlag = true;
+      } else {
+        return this.widgetService.createWidget(this.pageId, this.widget).subscribe((returnWidget: Widget) => {
+          this.widget = returnWidget;
+          this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+        });
+      }
     }
   }
 

@@ -6,7 +6,7 @@
 
     <div class="card-header bg-primary text-white">
       <strong class="heading-padding">Profile</strong>
-      <button class="btn btn-link float-right" (click)="f.ngSubmit.emit()"><i class="fa fa-check white-icon"></i></button>
+      <a class="btn btn-link float-right icon-no-padding" (click)="f.ngSubmit.emit()"><i class="fa fa-check white-icon"></i></a>
     </div>
     <div class="card-body">
       <div class="form-group">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="card-footer bg-primary text-white fixed-bottom">
-      <a class="btn btn-link float-right white-icon" routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+      <a class="btn btn-link float-right white-icon icon-no-padding" routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
     </div>
   </div>
 

@@ -1,4 +1,4 @@
-module.exports = function(app){
+module.exports = function (app) {
   app.post("/api/website/:websiteId/page", createPage);
   app.get("/api/website/:websiteId/page", findAllPagesForWebsite);
   app.get("/api/page/:pageId", findPageById);
@@ -9,11 +9,10 @@ module.exports = function(app){
   function createPage(req, res) {
     var page = req.body;
     var websiteId = req.params["websiteId"];
-    pageModel.createPage(websiteId,page).then(function (page) {
+    pageModel.createPage(websiteId, page).then(function (page) {
       res.json(page);
     });
   }
-
 
   function findAllPagesForWebsite(req, res) {
     var websiteId = req.params["websiteId"];
@@ -31,8 +30,8 @@ module.exports = function(app){
 
   function updatePage(req, res) {
     var pageId = req.params["pageId"];
-    var page  = req.body;
-    pageModel.updatePage(pageId,page).then(function (page) {
+    var page = req.body;
+    pageModel.updatePage(pageId, page).then(function (page) {
       res.json(page);
     });
   }

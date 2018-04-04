@@ -24,7 +24,7 @@ export class UserService {
             this.sharedService.user = user; // setting user as global variable using shared service
             return true;
           } else {
-            alert('Please login.')
+            alert('Please login.');
             this.router.navigate(['/login']);
             return false;
           }
@@ -37,8 +37,8 @@ export class UserService {
     this.options.withCredentials = true;
 
     const body = {
-      username : username,
-      password : password
+      username: username,
+      password: password
     };
     return this.http.post(this.baseUrl + '/api/login', body, this.options)
       .map(
@@ -61,8 +61,8 @@ export class UserService {
   register(username: String, password: String) {
     this.options.withCredentials = true;
     const body = {
-      username : username,
-      password : password
+      username: username,
+      password: password
     };
 
     return this.http.post(this.baseUrl + '/api/register', body, this.options)

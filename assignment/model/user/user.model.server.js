@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var UserSchema = require("./user.schema.server")();
-var User = mongoose.model("User", UserSchema); //mongo plurarizes
+var User = mongoose.model("User", UserSchema);
 var pageModel = require("../page/page.model.server");
 var widgetModel = require("../widget/widget.model.server");
 var websiteModel = require("../website/website.model.server");
@@ -12,7 +12,6 @@ User.deleteUser = deleteUser;
 User.updateUser = updateUser;
 User.findUserByUsername = findUserByUsername;
 User.findFacebookUser = findFacebookUser;
-
 
 function findFacebookUser(id) {
   return User.findOne({"facebook.id": id});
@@ -57,14 +56,13 @@ function deleteUser(userId) {
       pageModel.remove({_website: website._id}).exec();
     })
   });
+
   websiteModel.remove({developerId: userId}).exec();
   return User.remove({_id: userId});
 }
 
-//findOne returns only One (first one for multiple results)
 function findUserByCredentials(username, password) {
   return User.findOne({username: username, password: password});
-
 }
 
 function createUser(user) {
