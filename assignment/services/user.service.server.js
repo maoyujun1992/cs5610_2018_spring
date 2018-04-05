@@ -29,7 +29,7 @@ module.exports = function (app) {
       successRedirect: '/profile',
       failureRedirect: '/login'
     }));
-  app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
+  app.get('/facebook/login', passport.authenticate('facebook', {scope: ['email']}));
 
   passport.serializeUser(serializeUser);
   passport.deserializeUser(deserializeUser);
@@ -46,7 +46,7 @@ module.exports = function (app) {
           } else {
             var names = profile.displayName.split(" ");
             var newFacebookUser = {
-              username: 'test',
+              username: 'Rename your username',
               lastName: names[1],
               firstName: names[0],
               email: profile.emails ? profile.emails[0].value : "",
