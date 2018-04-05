@@ -57,7 +57,7 @@ module.exports = function (app) {
       widgetModel.findWidgetById(widgetId).then(function (widget) {
         widget.url = '/uploads/' + filename;
         widgetModel.updateWidget(widgetId, widget);
-        res.redirect("http://localhost:3100/user/" + userId + "/website/"
+        res.redirect("https://cs5610-webdev-yujunm.herokuapp.com/user/" + userId + "/website/"
           + websiteId + "/page/" + pageId + "/widget/" + widgetId)
       });
     }
