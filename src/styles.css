@@ -39,3 +39,6 @@ input, textarea{
 .icon-no-padding{
   padding: 0px;
 }
+.card-padding-bottom{
+  padding-bottom: 50px;
+}
